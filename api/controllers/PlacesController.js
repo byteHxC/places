@@ -5,8 +5,14 @@ const Place = require('../models/Place');
 const upload = require('../config/upload');
 const Uploader = require('../models/Uploader');
 
+// helpers
+const helpers = require('./helpers');
+
+// CONSTANTES
+const validParams = 
+    ['title', 'description', 'address', 'acceptsCreditCard', 'openHour', 'closeHour'];
 function find(req, res, next){
-    Place.findById(req.params.id)
+    Place.findOne({ slug: req.params.id })
         .then(place => {
             req.place = place;
             next();
@@ -33,13 +39,8 @@ function show(req, res){
 
 function create(req, res, next){
     // Crear lugar
-    let attributes = ['title', 'description', 'acceptsCreditCard', 'openHour', 'closeHour'];
-    let placeParams = {};
-    attributes.forEach( attr => {
-        if(Object.prototype.hasOwnProperty.call(req.body, attr))
-            placeParams[attr] = req.body[attr];
-    });
-    Place.create(placeParams)
+    const params = helpers.paramsBuilder(validParams, req.body);
+    Place.create(params)
     .then(doc => {
         req.place = doc;
         next();
@@ -50,13 +51,8 @@ function create(req, res, next){
 }
 function update(req, res){
     // Actualizar lugar
-    let attributes = ['title', 'description', 'acceptsCreditCard', 'openHour', 'closeHour'];
-    let placeParams = {};
-    attributes.forEach( attr => {
-        if(Object.prototype.hasOwnProperty.call(req.body, attr))
-            placeParams[attr] = req.body[attr];
-    });
-    req.place = Object.assign(req.place, placeParams);
+    const params = helpers.paramsBuilder(validParams, req.body);
+    req.place = Object.assign(req.place, params);
     req.place.save()
         .then(doc => {
             res.json(doc);

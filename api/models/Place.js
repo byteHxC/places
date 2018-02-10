@@ -2,12 +2,18 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
 const Uploader = require('./Uploader');
+const slugify = require('../plugins/slugify');
 
 let placeSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
+    slug: {
+        type: String,
+        // unique: true => error for unique :null
+    },
+    address: String,
     description: String,
     acceptsCreditCard: {
         type: Boolean,
@@ -33,8 +39,32 @@ placeSchema.methods.saveImageUrl = function (secureUrl, imageType){
     return this.save();
 }
 
+placeSchema.pre('save', function(next){
+    if(this.slug) return next();
+    generateSlugAndContinue.call(this, 0, next);
+});
+
+placeSchema.statics.validateSlugCount = function(slug){
+    return Place.count({ slug: slug})
+        .then(count => {
+            if(count > 0) return false;
+            return true;
+        })
+}
 placeSchema.plugin(mongoosePaginate);
 
+function generateSlugAndContinue(count, next){
+    this.slug = slugify(this.title);
+    if(count != 0)
+        this.slug = `${this.slug}-${count}`;
+
+    Place.validateSlugCount(this.slug)
+        .then(isValid => {
+            if(!isValid)
+                return generateSlugAndContinue.call(this, count+1, next);
+            next();
+        })
+}
 let Place = mongoose.model('Place', placeSchema);
 
 module.exports = Place;

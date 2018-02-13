@@ -15,6 +15,7 @@ function find(req, res, next){
     Place.findOne({ slug: req.params.id })
         .then(place => {
             req.place = place;
+            req.mainObj = place;
             next();
         }).catch(err => {
             console.log(err);
@@ -40,6 +41,7 @@ function show(req, res){
 function create(req, res, next){
     // Crear lugar
     const params = helpers.paramsBuilder(validParams, req.body);
+    params['_user'] = req.user.id;
     Place.create(params)
     .then(doc => {
         req.place = doc;
@@ -51,6 +53,8 @@ function create(req, res, next){
 }
 function update(req, res){
     // Actualizar lugar
+    console.log('ENTRA ALV')
+
     const params = helpers.paramsBuilder(validParams, req.body);
     req.place = Object.assign(req.place, params);
     req.place.save()

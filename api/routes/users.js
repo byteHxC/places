@@ -8,7 +8,8 @@ router.route('/')
   .post(usersController.create,
       sessionsController.generateToken,
        sessionsController.sendToken)
-  .delete(usersController.destroyAll)
+  .get(usersController.myPlaces)
+  // .delete(usersController.destroyAll)
 
   
 module.exports = router;

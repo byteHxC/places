@@ -3,11 +3,15 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const jwtMiddleware = require('express-jwt');
 
+// secrets
+const secrets = require('./config/secrets');
 // routes
 const places = require('./routes/places');
 const users = require('./routes/users');
 const sessions = require('./routes/sessions');
+
 // database
 const db = require('./config/database');
 db.connect();
@@ -21,6 +25,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Authenticate JWT
+
+app.use(
+	jwtMiddleware({ secret: secrets.jwtSecret })
+		.unless({ path: ['/sessions', '/users'], method: 'GET'})
+)
 
 app.use('/places', places);
 app.use('/users', users);

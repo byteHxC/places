@@ -1,10 +1,12 @@
 // PLACES_RUTAS
-
 const express = require('express');
 let router = express.Router();
 
 // CONTROLLER 
 const placesController = require('../controllers/PlacesController');
+
+// Middlewares
+const authenticateOwner = require('../middlewares/authenticateOwner');
 
 router.route('/')
     .get(placesController.index)
@@ -14,7 +16,7 @@ router.route('/')
 
 router.route('/:id')
     .get(placesController.find, placesController.show)
-    .put(placesController.find, placesController.update)
-    .delete(placesController.find, placesController.destroy)
+    .put(placesController.find, authenticateOwner, placesController.update)
+    .delete(placesController.find, authenticateOwner, placesController.destroy)
 
 module.exports = router;

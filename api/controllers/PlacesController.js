@@ -35,7 +35,13 @@ function index(req, res){
 
 function show(req, res){
     // Busqueda individual
-    res.json(req.place);
+    req.place.users
+        .then(userss => {
+            res.json({place: req.place, userss});
+        }).catch(err => {
+            console.log(err);
+            res.json(err);
+        })
 }
 
 function create(req, res, next){

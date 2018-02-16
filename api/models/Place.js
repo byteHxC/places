@@ -4,6 +4,10 @@ const mongoosePaginate = require('mongoose-paginate');
 const Uploader = require('./Uploader');
 const slugify = require('../plugins/slugify');
 
+const FavoritePlace = require('./FavoritePlace');
+const User = require('./User');
+const Visit = require('./Visit');
+
 let placeSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -32,6 +36,13 @@ let placeSchema = new mongoose.Schema({
     }
 });
 
+placeSchema.virtual('users').get(function(){
+    return FavoritePlace.find({'_place': this._id}, {'_user': true})
+        .then(favs => {
+            let usersId = favs.map(fav => fav._user);
+            return User.find({'_id': {$in: usersId}});
+        })
+})
 placeSchema.methods.updateImage = function (path, imageType){
     // 1.- Subir imagen
     // 2.- Guardar el lugar
@@ -56,6 +67,10 @@ placeSchema.statics.validateSlugCount = function(slug){
             return true;
         })
 }
+placeSchema.virtual('visits').get(function(){
+    return Visit.find({'_place': this._id}).sort('-id');
+})
+
 placeSchema.plugin(mongoosePaginate);
 
 function generateSlugAndContinue(count, next){

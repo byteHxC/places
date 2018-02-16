@@ -15,14 +15,11 @@ function create(req, res){
         })
 }
 function index(req, res){
-    User.findOne({'_id': req.user.id})
-        .then(user => {
-            console.log(user.places);
-            user.favorites
-                .then(places => {
-                    res.json(places);
-                })
-            
+    if(!req.fullUser) return res.json({error: 'User undefined'});
+    req.fullUser.favorites
+        .then(favoritePlaces => {
+            // console.log('alv', favoritePlaces)
+            res.json(favoritePlaces);
         })
 }
 function find(req, res, next){

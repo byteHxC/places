@@ -4,9 +4,9 @@ const mongoosePaginate = require('mongoose-paginate');
 const Uploader = require('./Uploader');
 const slugify = require('../plugins/slugify');
 
-const FavoritePlace = require('./FavoritePlace');
-const User = require('./User');
-const Visit = require('./Visit');
+const FavoritePlace = require('../models/FavoritePlace');
+// const User = require('../models/User');
+const Visit = require('../models/Visit');
 
 let placeSchema = new mongoose.Schema({
     title: {
@@ -36,13 +36,6 @@ let placeSchema = new mongoose.Schema({
     }
 });
 
-placeSchema.virtual('users').get(function(){
-    return FavoritePlace.find({'_place': this._id}, {'_user': true})
-        .then(favs => {
-            let usersId = favs.map(fav => fav._user);
-            return User.find({'_id': {$in: usersId}});
-        })
-})
 placeSchema.methods.updateImage = function (path, imageType){
     // 1.- Subir imagen
     // 2.- Guardar el lugar
@@ -69,8 +62,16 @@ placeSchema.statics.validateSlugCount = function(slug){
 }
 placeSchema.virtual('visits').get(function(){
     return Visit.find({'_place': this._id}).sort('-id');
-})
+});
 
+// AL USARLO SE HACE UN CICLO ALV
+// placeSchema.virtual('users').get(function(){
+//     return FavoritePlace.find({'_place': this._id}, {'_user': true})
+//         .then(favs => {
+//             let usersId = favs.map(fav => fav._user);
+//             return User.find({'_id': {$in: usersId}});
+//         })
+// });
 placeSchema.plugin(mongoosePaginate);
 
 function generateSlugAndContinue(count, next){
@@ -85,6 +86,6 @@ function generateSlugAndContinue(count, next){
             next();
         })
 }
-let Place = mongoose.model('Place', placeSchema);
 
+let Place = mongoose.model('Place', placeSchema);
 module.exports = Place;

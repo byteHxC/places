@@ -36,12 +36,13 @@ userSchema.virtual('places').get(function(){
 });
 
 userSchema.virtual('favorites').get(function(){
-    return FavoritePlace.find({'_user': this._id}, {'_place': true})
-        .then(favs => {
-            let placeIds = favs.map(fav => fav._place);
-            return Place.find({'_id': {$in: placeIds}})
-        })
-});
+    return FavoritePlace.find({'_user': this._id},{'_place': true})
+            .then(favs =>{
+              let placeIds = favs.map(fav => fav._place);
+              return Place.find({'_id': {$in: placeIds }})
+            })
+  })
+  
 
 userSchema.plugin(mongooseBcrypt);
 

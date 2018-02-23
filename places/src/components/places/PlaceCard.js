@@ -9,11 +9,9 @@ import {
 import { CSSTransition } from 'react-transition-group';
 
 class PlaceCard extends Component {
-    constructor(){
-        super();
-    }
+
     render() {
-        const { place, show } = this.props;
+        const { place } = this.props;
         return (
             <CSSTransition
                 classNames="fade-scale"

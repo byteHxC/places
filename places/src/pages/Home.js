@@ -8,6 +8,7 @@ import data from '../request/places';
 import Title from '../components/Title';
 import PlaceCard from '../components/places/PlaceCard';
 import Benefits from '../components/Benefits';
+import Container from '../components/Container';
 
 class Home extends Component {
     
@@ -35,14 +36,14 @@ class Home extends Component {
         return (
             <section>
                 <div className="Header-background">
-                    <div className="container">
+                    <Container>
                     <div className="Header-main">
                         <Title />
                         <RaisedButton label="Crear cuenta gratuita" secondary={true} />
                         <img className="Header-illustration" src={`${process.env.PUBLIC_URL}/images/places-api.png`} height="400"/>
                     </div>
                         <Benefits/>
-                    </div>
+                    </Container>
                             
                 </div>
                 <div style={{backgroundColor: indigo400, padding: '50px', color: 'white'}}>

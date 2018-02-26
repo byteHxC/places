@@ -4,20 +4,28 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import { Link } from 'react-router-dom';
 
 import Container from '../components/Container';
-import data from '../request/places';
+import { data, getPlaces } from '../request/places';
 import PlaceHorizontal from '../components/places/PlaceHorizontal';
 
 class Dashboard extends Component {
     constructor(){
         super();
         this.state = {
-            places: data.places
+            places: []
         };
+        this.loadPlaces();
+    }
+
+    loadPlaces(){
+        getPlaces().then(data => {
+            console.log('=>', data)
+            this.setState({
+                places: data.docs
+            })
+        });
     }
     places(){
-        return this.state.places.map((place, index) => (<PlaceHorizontal place={place} key={index}/>))
-
-        ;
+        return this.state.places.map((place, index) => (<PlaceHorizontal place={place} key={index}/>));
     }
     render() {
         return (

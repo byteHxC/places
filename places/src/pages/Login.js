@@ -6,9 +6,38 @@ import {
 
 import Title from '../components/Title';
 import Container from '../components/Container';
-
+import { login, signUp } from '../request/auth';
 
 class Login extends Component {
+
+    constructor(){
+        super();
+
+        this.requestAuth = this.requestAuth.bind(this);
+        this.createAccount = this.createAccount.bind(this);
+    }
+    requestAuth(){
+        const credentials = {
+            email: this.refs.emailField.getValue(),
+            password: this.refs.passwordField.getValue()
+        }
+
+        login(credentials)
+            .then(console.log)
+            .catch(console.log);
+
+    }
+
+    createAccount(){
+        const credentials = {
+            email: this.refs.emailField.getValue(),
+            password: this.refs.passwordField.getValue()
+        }
+
+        signUp(credentials)
+            .then(console.log)
+            .catch(console.log);
+    }
     render() {
         return (
             <div className="row middle-xs">
@@ -20,18 +49,20 @@ class Login extends Component {
                                 floatingLabelText="Correo electronico"
                                 type="email"
                                 className="textfield"
+                                ref="emailField"
                             />
                             <TextField
                                 floatingLabelText="Contraseña"
                                 type="password"
                                 className="textfield"
+                                ref="passwordField"
                             />
                             <div className="Login-actions">
                                 <Route path="/login" exact render={() => 
                                     (
                                         <div>
                                             <Link style={{marginRight: '1em'}} to="/signup">Crear nueva cuenta</Link>
-                                            <RaisedButton label="Ingresar" secondary={true}/>
+                                            <RaisedButton onClick={this.requestAuth} label="Ingresar" secondary={true}/>
                                         </div>
                                     )
                                 }/>
@@ -39,7 +70,7 @@ class Login extends Component {
                                     (
                                         <div>
                                             <Link style={{marginRight: '1em'}} to="/login">Ya tengo cuenta</Link>
-                                            <RaisedButton label="Crear cuenta" secondary={true}/>
+                                            <RaisedButton onClick={this.createAccount} label="Crear cuenta" secondary={true}/>
                                         </div>
                                     )
                                 }/>

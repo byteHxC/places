@@ -103,6 +103,29 @@
   transition: opacity cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
+
+
+
+.left-out-enter {
+  opacity: 0.0;
+  transform: translateX(100%);
+}
+
+.left-out-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.left-out-exit {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+.left-out-exit-active{
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .PlaceH-avatar {
   background-color: #f5f5f5;
   display: flex;
@@ -114,4 +137,19 @@
 
 .PlaceH-avatar img{
   max-width: 80%;
+}
+
+.Place-cover {
+  height: 450px;
+  background-size: cover;
+  background-position: center;
+}
+
+.Place-card {
+  text-align: left;
+  padding: 30px;
+}
+
+.Place-container {
+
 }

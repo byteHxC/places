@@ -7,8 +7,9 @@ class MyAppBar extends Component {
         return (
             <AppBar 
                 title="Places"
-                style={{backgroundColor: indigo600}}
+                style={{backgroundColor: indigo600, cursor: 'pointer'}}
                 showMenuIconButton={false}
+                onTitleClick={this.props.goHome}
             />
         );
     }

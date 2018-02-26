@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as ReactRouter,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom';
 
 import App from './App';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Place from './pages/Place';
 
-const userSignedIn = true;
+const userSignedIn = false;
 
 class Router extends Component {
 
@@ -24,14 +26,18 @@ class Router extends Component {
         if(userSignedIn) return Dashboard;
         return Home;
     }
+
     render() {
         return (
             <ReactRouter>
                 <App>
-                    <Route exact path="/" component={this.home()}> </Route>
-                    <Route path="/login" component={Login}/>
-                    <Route path="/signup" component={Login}/>
-                    {this.signedInRoutes()}
+                    <Switch>
+                        <Route exact path="/" component={this.home()}> </Route>
+                        <Route path="/lugares/:slug" component={Place}/>
+                        <Route path="/login" component={Login}/>
+                        <Route path="/signup" component={Login}/>
+                        {this.signedInRoutes()}
+                    </Switch>
                 </App>
             </ReactRouter>
         );

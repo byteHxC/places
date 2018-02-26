@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardText, CardActions, FlatButton } from 'material-ui';
+import { Link } from 'react-router-dom';
+
 class PlaceHorizontal extends Component {
     render() {
         const { place } = this.props;
@@ -7,7 +9,7 @@ class PlaceHorizontal extends Component {
             <Card style={{marginTop: '1em', overflow: 'hidden'}}>
                 <div className="row">
                     <div className="PlaceH-avatar">
-                        <img src={place.imageUrl}/>
+                        <img src={place.avatarImage}/>
                     </div>
                     <div className="col-xs" style={{ textAlign: 'left'}}>
                         <CardHeader
@@ -20,7 +22,9 @@ class PlaceHorizontal extends Component {
                             </div>
                             <div className="col-xs">
                                 <CardActions>
-                                    <FlatButton label="Ver más"/>
+                                    <Link to={`/lugares/${place.slug}`}>
+                                        <FlatButton label="Ver más"/>
+                                    </Link>
                                 </CardActions>
                             </div>
                         </div>

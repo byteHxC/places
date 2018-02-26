@@ -24,6 +24,7 @@ const findAppBySecret = require('./middlewares/findAppBySecret');
 const findAppByApplicationId = require('./middlewares/findAppByApplicationId');
 const authApp = require('./middlewares/authApp')();
 const allowCORs = require('./middlewares/allowCORs')();
+
 const app = express();
 
 // uncomment after placing your favicon in /public
@@ -37,14 +38,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // secure api
 app.use(findAppBySecret);
 app.use(findAppByApplicationId);
-app.use(authApp.unless({method: 'OPTIONS'}));
+// app.use(authApp.unless({method: 'OPTIONS'}));
 app.use(allowCORs.unless({path: '/public'}));
 // Authenticate JWT
 
-app.use(
+// app.use(
 	jwtMiddleware({ secret: secrets.jwtSecret })
 		.unless({ path: ['/sessions', '/users'], method: ['GET', 'OPTIONS']})
-)
 
 app.use('/places', places);
 app.use('/places', visitsPlaces);

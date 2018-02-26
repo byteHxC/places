@@ -15,6 +15,7 @@ class PlaceCard extends Component {
         return (
             <CSSTransition
                 classNames="fade-scale"
+                timeout={300}
                 in={this.props.in}>
                 <div className="col-xs-12 col-sm-4" style={{padding: '1em'}}>
                 <Card >

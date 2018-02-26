@@ -11,6 +11,7 @@ const helpers = require('./helpers');
 // CONSTANTES
 const validParams = 
     ['title', 'description', 'address', 'acceptsCreditCard', 'openHour', 'closeHour'];
+
 function find(req, res, next){
     Place.findOne({ slug: req.params.id })
         .then(place => {
@@ -35,13 +36,16 @@ function index(req, res){
 
 function show(req, res){
     // Busqueda individual
-    req.place.users
-        .then(userss => {
-            res.json({place: req.place, userss});
-        }).catch(err => {
-            console.log(err);
-            res.json(err);
-        })
+    res.json(req.place);
+    
+    // req.place.users
+    //     .then(userss => {
+    //         console.log(')>Z', req.place);
+    //         res.json({place: req.place, userss});
+    //     }).catch(err => {
+    //         console.log(err);
+    //         res.json(err);
+    //     })
 }
 
 function create(req, res, next){

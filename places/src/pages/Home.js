@@ -3,23 +3,36 @@ import { RaisedButton } from "material-ui";
 import { indigo400 } from 'material-ui/styles/colors';
 import { TransitionGroup } from 'react-transition-group';
 import { Link } from 'react-router-dom';
-import data from '../request/places';
+import { connect } from 'react-redux';
 
 import Title from '../components/Title';
 import PlaceCard from '../components/places/PlaceCard';
 import Benefits from '../components/Benefits';
 import Container from '../components/Container';
 
+import {  getPlaces } from '../request/places';
+import data from '../request/places';
+
 
 class Home extends Component {
     
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             places: data.places
         }
-        // setTimeout(() => this.setState({ places: data.places}), 2000);
+        console.log(this.props.places);
         this.hidePlace = this.hidePlace.bind(this);
+    }
+    loadPlaces(){
+        getPlaces().then(data => {
+            const places = data.docs;
+
+
+            this.setState({
+                places: data.docs
+            })
+        });
     }
     places(){
         return this.state.places.map((place, index) => {
@@ -59,5 +72,9 @@ class Home extends Component {
         );
     }
 }
-
-export default Home;
+function mapStateToProps(state, ownProps){
+    return {
+        places: state.placesReducer
+    }
+}
+export default connect(mapStateToProps)(Home);

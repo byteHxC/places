@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { FlatButton, FloatingActionButton } from 'material-ui';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Container from '../components/Container';
-import { data, getPlaces } from '../request/places';
 import PlaceHorizontal from '../components/places/PlaceHorizontal';
+
+import { getPlaces } from '../request/places';
+import * as placesActions from '../actions/placesActions';
+
 
 class Dashboard extends Component {
     constructor(){
@@ -58,4 +62,9 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+function mapStateToProps(state, ownProps){
+    return {
+        places: state.places
+    }
+}
+export default connect(mapStateToProps)(Dashboard);

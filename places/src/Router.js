@@ -4,6 +4,8 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
 
 import App from './App';
 import Home from './pages/Home';
@@ -16,20 +18,20 @@ const userSignedIn = false;
 class Router extends Component {
 
     signedInRoutes(){
-        if(userSignedIn){
+        if(this.props.user.jwt){
             return (
                 <Route path="/new" render={() => <h1>Bienvenido</h1>}/>
             );
         }
     }
     home(){
-        if(userSignedIn) return Dashboard;
+        if(this.props.user.jwt) return Dashboard;
         return Home;
     }
 
     render() {
         return (
-            <ReactRouter>
+            <ConnectedRouter history={this.props.history}>
                 <App>
                     <Switch>
                         <Route exact path="/" component={this.home()}> </Route>
@@ -39,8 +41,14 @@ class Router extends Component {
                         {this.signedInRoutes()}
                     </Switch>
                 </App>
-            </ReactRouter>
+            </ConnectedRouter>
         );
     }
 }
-export default Router;
+
+function mapStateToProps(state, ownProps){
+    return {
+        user: state.userReducer
+    }
+}
+export default connect(mapStateToProps)(Router);

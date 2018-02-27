@@ -3,7 +3,7 @@ import { MuiThemeProvider } from "material-ui";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { withRouter } from 'react-router-dom';
 import './App.css';
-import MyAppBar from './components/navigation/MyAppBar';
+import Navigation from './components/navigation/Navigation';
 
 
 class App extends Component {
@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <MyAppBar goHome={this.goHome}/>
+          <Navigation />
           <TransitionGroup>
             <CSSTransition classNames="left-out" timeout={300} key={this.props.location.pathname.split('/')[0]}>
               {this.props.children}

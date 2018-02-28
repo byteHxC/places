@@ -1,5 +1,7 @@
+import config from '../config/secrets';
+
 function getPlaces(){
-    return fetch('http://localhost:8080/places')
+    return fetch(`${config.url}/places`)
         .then(data => {
             return data.json()
         })
@@ -9,7 +11,7 @@ function getPlaces(){
 }
 
 function getPlace(slug){
-    return fetch(`http://localhost:8080/places/${slug}`)
+    return fetch(`${config.url}/places/${slug}`)
         .then(data => {
             return data.json()
         })
@@ -18,7 +20,24 @@ function getPlace(slug){
         })
 }
 
-export { getPlaces, getPlace };
+function createPlace(data, jwt) {
+    const formData = new FormData();
+    for(let field in data){
+        formData.append(field, data[field])
+    }
+    return fetch(config.url+'/places', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    }).then(dataRemote => {
+        return dataRemote.json();
+    })
+}
+
+export { getPlaces, getPlace, createPlace };
 export default {
     places: [
         {

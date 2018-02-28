@@ -12,24 +12,16 @@ import * as placesActions from '../actions/placesActions';
 
 
 class Dashboard extends Component {
-    constructor(){
-        super();
-        this.state = {
-            places: []
-        };
+    constructor(props){
+        super(props);
         this.loadPlaces();
     }
 
     loadPlaces(){
-        getPlaces().then(data => {
-            console.log('=>', data)
-            this.setState({
-                places: data.docs
-            })
-        });
+        this.props.dispatch(placesActions.loadAll());
     }
     places(){
-        return this.state.places.map((place, index) => (<PlaceHorizontal place={place} key={index}/>));
+        return this.props.places.map((place, index) => (<PlaceHorizontal place={place} key={index}/>));
     }
     render() {
         return (
@@ -64,7 +56,7 @@ class Dashboard extends Component {
 
 function mapStateToProps(state, ownProps){
     return {
-        places: state.places
+        places: state.placesReducer
     }
 }
 export default connect(mapStateToProps)(Dashboard);

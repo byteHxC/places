@@ -1,5 +1,7 @@
+import config from '../config/secrets';
+
 function login(credentials){
-    return fetch('http://localhost:8080/sessions',{
+    return fetch(`${config.url}/sessions`,{
         method: 'POST',
         body: JSON.stringify(credentials),
         headers: {
@@ -13,7 +15,7 @@ function login(credentials){
 }
 
 function signUp(credentials){
-    return fetch('http://localhost:8080/users',{
+    return fetch(`${config.url}/users`,{
         method: 'POST',
         body: JSON.stringify(credentials),
         headers: {

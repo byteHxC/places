@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Place from './pages/Place';
+import NewPlace from './pages/places/NewPlace';
 
 const userSignedIn = false;
 
@@ -20,7 +21,7 @@ class Router extends Component {
     signedInRoutes(){
         if(this.props.user.jwt){
             return (
-                <Route path="/new" render={() => <h1>Bienvenido</h1>}/>
+                <Route path="/new" component={NewPlace}/>
             );
         }
     }

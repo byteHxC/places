@@ -42,9 +42,10 @@ app.use(findAppByApplicationId);
 app.use(allowCORs.unless({path: '/public'}));
 // Authenticate JWT
 
-// app.use(
+app.use(
 	jwtMiddleware({ secret: secrets.jwtSecret })
 		.unless({ path: ['/sessions', '/users'], method: ['GET', 'OPTIONS']})
+)
 
 app.use('/places', places);
 app.use('/places', visitsPlaces);

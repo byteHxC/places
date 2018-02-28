@@ -2025,6 +2025,10 @@ emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
 
+emojione@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/emojione/-/emojione-3.1.2.tgz#991e30c80db4b1cf15eacb257620a7edce9c6ef4"
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -2374,6 +2378,10 @@ execa@^0.7.0:
     p-finally "^1.0.0"
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
+
+exenv@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 
 expand-brackets@^0.1.4:
   version "0.1.5"
@@ -5235,6 +5243,14 @@ react-event-listener@^0.5.1:
     babel-runtime "^6.26.0"
     fbjs "^0.8.16"
     prop-types "^15.6.0"
+    warning "^3.0.0"
+
+react-modal@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.3.1.tgz#7355db196482da0c7fa1cbecccf2bdd9bc366b14"
+  dependencies:
+    exenv "^1.2.0"
+    prop-types "^15.5.10"
     warning "^3.0.0"
 
 react-redux@^5.0.7:

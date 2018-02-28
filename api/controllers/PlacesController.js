@@ -51,6 +51,8 @@ function show(req, res){
 function create(req, res, next){
     // Crear lugar
     const params = helpers.paramsBuilder(validParams, req.body);
+    // console.log('oparams,,',params)
+    // console.log('aluser',req.user)
     params['_user'] = req.user.id;
     Place.create(params)
     .then(doc => {

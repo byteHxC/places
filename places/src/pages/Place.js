@@ -9,6 +9,8 @@ import Container from '../components/Container';
 import { getPlace } from '../request/places';
 import VisitForm from '../components/visits/VisitForm';
 import * as visitsActions from '../actions/visitsAction';
+import * as favoritesActions from '../actions/favoritesActions';
+
 import VisitsCollection from '../components/visits/VisitsCollection';
 
 
@@ -21,6 +23,7 @@ class Place extends Component {
         this.state = {
             place: {}
         }
+        this.fav = this.fav.bind(this);
 
     }
 
@@ -35,8 +38,13 @@ class Place extends Component {
                 })
             })
     }
+    fav(){
+        this.props.dispatch(favoritesActions.add(this.state.place._id));
+    }
     favBtn(){
-       return (<FloatingActionButton className='Fav-btn' backgroundColor={yellow700}>
+       return (<FloatingActionButton 
+                    onClick={this.fav()}
+                    className='Fav-btn' backgroundColor={yellow700} >
                     <Star />
                 </FloatingActionButton>)
     }
